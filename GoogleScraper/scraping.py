@@ -388,7 +388,8 @@ class SearchEngineScrape(metaclass=abc.ABCMeta):
             proxy = self.session.query(db_Proxy).filter(self.proxy.host == db_Proxy.ip).first()
             if proxy:
                 for key in ipinfo.keys():
-                    setattr(proxy, key, ipinfo[key])
+                    if key != 'ip':
+                        setattr(proxy, key, ipinfo[key])
 
                 proxy.checked_at = datetime.datetime.utcnow()
                 proxy.status = status
